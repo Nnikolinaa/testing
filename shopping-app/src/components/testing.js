@@ -1,6 +1,10 @@
+// Importing necessary dependencies and hooks from React and axios.
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Defining a functional component called TestingComponent.
+// Using the useState hook to declare several state variables (products, editMode, updatedProduct, newProduct, and setCartItems) and their corresponding setter functions.
 export default function TestingComponent() {
   const [products, setProducts] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -8,6 +12,8 @@ export default function TestingComponent() {
   const [newProduct, setNewProduct] = useState({ title: '', body: '' });
   const [ setCartItems] = useState([]);
 
+  // Using the useEffect hook to fetch products from a remote API (https://jsonplaceholder.typicode.com/posts) when the component mounts.
+// Updating the products state with the fetched data using the setProducts setter function.
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -21,11 +27,14 @@ export default function TestingComponent() {
     fetchProducts();
   }, []);
 
+  // Defining a function handleDelete to remove a product from the products state array based on its id.
   const handleDelete = (id) => {
     const updatedProducts = products.filter((product) => product.id !== id);
     setProducts(updatedProducts);
   };
 
+// Defining a function handleUpdate to set the updatedProduct state to the product object that matches the provided id.  
+//Enabling the edit mode by setting editMode state to true
   const handleUpdate = (id) => {
     const productToUpdate = products.find((product) => product.id === id);
     setUpdatedProduct(productToUpdate);
@@ -44,10 +53,13 @@ export default function TestingComponent() {
     setEditMode(false);
   };
 
+  // Defining a function handleSaveUpdate to update the products state array by replacing the product with the matching id with the updatedProduct.
+ // Disabling the edit mode by setting editMode state to false.
   const handleCancelUpdate = () => {
     setEditMode(false);
   };
-
+ // Defining a function handleChange to update the updatedProduct state based on the changes made in the input fields.
+ // It uses object destructuring to extract the name and value from the event target and updates the corresponding property of updatedProduct using the spread syntax.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedProduct((prevProduct) => ({
